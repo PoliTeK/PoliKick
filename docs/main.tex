@@ -1,45 +1,70 @@
 \documentclass{article}
 
-
-\usepackage[italian]{babel}
-
-
-\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-
 % Useful packages
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
-\usepackage{float}
+\usepackage{amsmath}  % improve math presentation
+\usepackage{amssymb}
+\usepackage[italian]{babel}
+\usepackage{cancel}
+\usepackage{caption}
+\captionsetup{labelfont=bf, font=footnotesize}
+\usepackage{cite} % takes care of citations
+\usepackage{enumitem}
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage{placeins} % better float control
+\usepackage{siunitx}
+\sisetup{
+    sticky-per,
+    per-mode=power,
+    exponent-product=\cdot,
+    forbid-literal-units,
+    inline-per-mode=power,
+    display-per-mode=fraction,
+    uncertainty-mode=separate,
+    output-decimal-marker={,}
+}
+\usepackage{subcaption}
+\usepackage{tabularx} % extra features for tabular environment
 
+%
 
-\title{KICK}
+\title{PoliKick}
 \author{Politek}
 
 \begin{document}
 \maketitle
 
+\numberwithin{figure}{section}
+\numberwithin{equation}{section}
+
+\section{Introduzione}
 
 
-\section{INTRODUZIONE}
-
-
-
-\section{COMPONENTI}
+\section{Componenti}
 \subsection{T-Oscillator}
 
 \subsubsection{Comportamento qualitativo nel dominio tempo}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator.png} 
-    \label{fig:label}
+    \label{fig:Toscillator}
 \end{figure}
+
 Il Toscillator è un  circuito costituito da un solo amplificatore operazionale, due resistenze e due condensatori. Insieme formano un oscillatore a onda sinusoidale piuttosto strano che necessita di essere avviato con un impulso di tensione per iniziare a oscillare. Tuttavia, anche quando avviato, non continuerà a oscillare come fanno gli altri oscillatori, ma l'ampiezza calerà rapidamente fino a scomparire del tutto. Questo comportamento non è ideale per la maggior parte degli scenari, ma è perfetto per il nostro.Vediamo come funziona.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator1.png} 
-    \label{fig:label}
+    \label{fig:Toscillator1}
 \end{figure}
 
  Supponiamo che la tensione all’ingresso non invertente dell’op-amp salti rapidamente da 0 a 1 volt. Per raggiungere uno stato di equilibrio, l’op-amp cercherà di aumentare la tensione all’ingresso invertente fino a 1 volt anch'esso ( ricorda v+ = v- in un opamp). Per farlo, aumenterà inizialmente la sua tensione di uscita a 1 volt. Questo funzionerà all’inizio, poiché tale tensione attraversa direttamente i due condensatori e raggiunge così l’ingresso invertente. Tuttavia, a causa della presenza di una resistenza verso terra tra i due condensatori, vedremo una corrente che defluisce dal primo condensatore, il che significa che la tensione applicata al secondo condensatore, e successivamente all’ingresso invertente, diminuirà.
@@ -47,7 +72,7 @@ Il Toscillator è un  circuito costituito da un solo amplificatore operazionale,
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator2.png} 
-    \label{fig:label}
+    \label{fig:Toscillator2}
 \end{figure}
 
 Per compensare, l’op-amp aumenterà la sua tensione di uscita, ma facendo ciò, ancora più corrente verrà spremuta fuori dal primo condensatore, costringendo l’op-amp a spingere ancora di più. Questo continuerebbe fino a quando l’op-amp raggiunge la tensione di alimentazione superiore, se non fosse per la resistenza di collegamento in retroazione. Man mano che l’op-amp spinge sempre più forte, quella resistenza permette una piccola corrente di caricare il secondo condensatore dall’altro lato. A un certo punto, questo processo aggiungerà più tensione sulla sinistra di quanta ne perderemo a destra, facendo sì che l’intero meccanismo si inverta.
@@ -55,7 +80,7 @@ Per compensare, l’op-amp aumenterà la sua tensione di uscita, ma facendo ciò
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator3.png} 
-    \label{fig:label}
+    \label{fig:Toscillator3}
 \end{figure}
 
 
@@ -64,7 +89,7 @@ L’op-amp inizierà a ridurre la sua tensione di uscita per cercare di corregge
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator4.png} 
-    \label{fig:label}
+    \label{fig:Toscillator4}
 \end{figure}
 
 Il circuito si comporta un po' come un pendolo, e quindi l'uscita prodotta è un'onda sinusoidale che oscilla attorno alla tensione dell’ingresso non invertente con un’ampiezza in continua diminuzione, che dovrebbe già suonare molto simile a un suono di grancassa se la frequenza è abbastanza bassa.
@@ -87,39 +112,34 @@ che quando viene inserito nella retroazione di un amplificatore operazionale, tr
 Per utilizzare il filtro passa-banda come oscillatore, devono essere soddisfatte due condizioni: il cambiamento di fase intorno al loop dell'amplificatore operazionale deve essere un multiplo di 360 gradi (incluso 0 gradi) e ci deve essere un guadagno sufficiente.
 Nel circuito del filtro a T di ponte, l'uscita dell'amplificatore operazionale ha uno sfasamento di 0 gradi alla frequenza centrale. Pertanto, se calcoliamo una frequenza centrale per una certa frequenza dell'oscillatore desiderata, possiamo scegliere i valori corretti dei componenti per ottenere quella frequenza centrale, che ci darà uno sfasamento di 0 gradi a quella frequenza. 
 
-\newpage
-
-\begin{figure}[h]
+\begin{figure}[htp]
     \centering
-    \caption{notch filter}
     \includegraphics[width=\textwidth]{notch2.png} 
-    \label{fig:notch filter}
+    \caption{notch filter}
+    \label{fig:Notch-filter}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htp]
     \centering
-    \caption{Toscillator}
     \includegraphics[width=\textwidth]{toscillatorefrequency.png} 
-    \label{fig:notch filter}
+    \caption{T-oscillator}
+    \label{fig:Toscillator-plot}
 \end{figure}
-\newpage
+
 \subsection{Gate to Trigger}
 \subsubsection{Scopo}
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \caption{gate to trigger}
     \includegraphics[width=0.7\textwidth]{gatebase.png} 
+    \caption{gate to trigger}
     \label{fig:gate to trigger}
 \end{figure}
 L'obbiettivo di questa sezione di Circuito è Condizionare 
 
 
-
-
-
-
 \end{document}
+
 //Il blocco base consiste in un filtro passa alto e un comparatore (tensione soglia 3V). 
 Quando applichiamo un onda quadra  il condensatore si carica fino a 5 V e poi tramite la resitenza al ground si scarica. La velocita' di scarica dipende dalla capacita del condensatore piu e' alta piu' tempo ci impiega. Quando la tensione sulla resitenza e' maggiore di quella del morsetto invertente 3V l'uscita dell'opamp va al max ovvero 12 V, mentre se minore a -12V (ricorda alimentazione).
 Avendo bisogno di un impulso in uscita andiamo a prendere un condensatore con capacita piccola. Di conseguenza l'intervallo di tempo dove la tensione sulla resistenza e' maggiore di 3V sara' breve e quindi avremo in uscita un impulso.//
