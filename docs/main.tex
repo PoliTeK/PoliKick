@@ -3,6 +3,7 @@
 % Useful packages
 \usepackage{amsmath}  % improve math presentation
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage[italian]{babel}
 \usepackage{cancel}
 \usepackage{caption}
@@ -39,6 +40,14 @@
 
 %
 
+\newcommand{\var}[2]{#1_\text{#2}}
+\DeclareMathOperator{\ustep}{u}
+
+\theoremstyle{definition}
+\newtheorem{example}{Esempio}
+
+%
+
 \title{PoliKick}
 \author{Politek}
 
@@ -56,6 +65,7 @@ In questo documento si studia il comportamento dei diversi blocchi che compongon
 
 \subsection{Gate to Trigger}
 
+\subsubsection{Analisi}
 Per cominciare, studiamo il primo blocco del circuito. La tensione d'ingresso \(v_i\) è un segnale che proviene da un sequencer, pertanto sarà formato da una sequenza di porte rettangolari ("gate") (figura \ref{fig:sequencer-signal}).
 
 \begin{figure}[ht]
@@ -72,13 +82,59 @@ Per cominciare, studiamo il primo blocco del circuito. La tensione d'ingresso \(
 \end{figure}
 
 Ignoriamo inizialmente il diodo. Il segnale \(v_i\) viene immediatamente filtrato da un filtro RC passa-alto, pertanto la tensione \(v_+\) assume la caratteristica forma esponenziale ad ogni transizione di \(v_i\).
-È utile introdurre il diodo \(D\) perché alcuni opamp soffrono di un effetto chiamato "phase inversion" se la tensione ai terminali diventa eccessivamente negativa; il compito del diodo è di bloccare la tensione su \(v_+\) ad un valore fisso durante la falling edge del segnale \(v_i\) (figura \ref{fig:sequencer-signal-hpf}).
+È utile introdurre il diodo \(D\) perché alcuni op-amp soffrono di un effetto chiamato "phase inversion" se la tensione ai terminali diventa eccessivamente negativa; il compito del diodo è di bloccare la tensione su \(v_+\) ad un valore fisso durante la fase di discesa del segnale \(v_i\) (figura \ref{fig:sequencer-signal-hpf}).
 
 % TODO: inserire figura
 \begin{figure}[ht]
     \centering
     \label{fig:sequencer-signal-hpf}
 \end{figure}
+
+L'op-amp è nella configurazione di comparatore non invertente senza isteresi:
+\begin{align*}
+    v_o &= \begin{cases}
+        +\var{V}{AL}, & v_A > \var{V}{REF} \\
+        -\var{V}{AL}, & v_A < \var{V}{REF} \\
+    \end{cases}
+    &
+    \var{V}{REF} &= k \var{V}{AL}
+    &
+    k \triangleq \frac{R_a}{R_a + R_b}
+\end{align*}
+
+La frequenza di taglio del filtro passa-alto è \(f_0 = \frac{1}{2 \pi \tau}\), dove \(\tau = RC\).
+
+Durante il transitorio in fase di salita del segnale \(v_i\), si ha \(v_A > \var{V}{REF}\) solo per un breve intervallo di tempo \(\Delta t\).
+In questo intervallo l'uscita del comparatore è \(\var{V}{AL}\).
+
+Esaminiamo uno di questi transitori:
+\begin{align*}
+    v_A(t) > \var{V}{REF} & \implies
+    V_I e^{-t/\tau} \ustep(t) > \var{V}{REF} = k \var{V}{AL} \geq 0 \\
+    & \implies 0 < t < \tau \log\frac{V_I}{k \var{V}{AL}} \triangleq \Delta t
+    \label{eq:trigger-dt}
+\end{align*}
+
+La presenza dell'op-amp garantisce un'impedenza d'uscita \(\var{R}{out} \approx 0\).
+
+Affinché il funzionamento del circuito sia corretto è necessario che l'op-amp abbia uno slew rate sufficientemente alto:
+\begin{equation*}
+    S_R \ll \frac{2 \var{V}{AL}}{\Delta t}
+\end{equation*}
+
+\subsubsection{Dimensionamento}
+È necessario che la costante di tempo \(\tau\) sia sufficientemente piccola rispetto alla durata del gate \(T\). Scegliamo prima il valore di \(\Delta t\), da cui dipende il funzionamento del blocco oscillatore.
+Imponiamo quindi \(5 \tau \le T\)
+
+\begin{example}
+    Si sceglie \(\Delta t = \tau = T/10\), dunque:
+    \begin{align*}
+        &\cancel{\tau} \log\frac{V_I}{k \var{V}{AL}} = \cancel{\Delta t} \implies
+        V_I = e \cdot k \var{V}{AL} \implies
+        k = \frac{R_a}{R_a + R_b} = \frac{V_I}{e \var{V}{AL}} \\
+        &\tau = RC \implies C = \tau/R = \frac{T}{10R}
+    \end{align*}
+\end{example}
 
 \subsection{T-Oscillator}
 \subsubsection{Comportamento qualitativo nel dominio tempo}
