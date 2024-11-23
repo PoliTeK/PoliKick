@@ -53,7 +53,6 @@
 In questo documento si studia il comportamento dei diversi blocchi che compongono il kick.
 
 \section{Componenti}
-\subsection{T-Oscillator}
 
 \subsection{Gate to Trigger}
 
@@ -83,47 +82,58 @@ Ignoriamo inizialmente il diodo. Il segnale \(v_i\) viene immediatamente filtrat
 
 \subsection{T-Oscillator}
 \subsubsection{Comportamento qualitativo nel dominio tempo}
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator.png} 
     \label{fig:Toscillator}
 \end{figure}
 
-Il Toscillator è un  circuito costituito da un solo amplificatore operazionale, due resistenze e due condensatori. Insieme formano un oscillatore a onda sinusoidale piuttosto strano che necessita di essere avviato con un impulso di tensione per iniziare a oscillare. Tuttavia, anche quando avviato, non continuerà a oscillare come fanno gli altri oscillatori, ma l'ampiezza calerà rapidamente fino a scomparire del tutto. Questo comportamento non è ideale per la maggior parte degli scenari, ma è perfetto per il nostro.Vediamo come funziona.
+Il Toscillator è un circuito costituito da un solo amplificatore operazionale, due resistenze e due condensatori. Insieme formano un oscillatore a onda sinusoidale piuttosto strano che necessita di essere avviato con un impulso di tensione per iniziare a oscillare.
+Tuttavia, anche quando avviato, non continuerà a oscillare come fanno gli altri oscillatori, ma l'ampiezza calerà rapidamente fino a scomparire del tutto. Questo comportamento non è ideale per la maggior parte degli scenari, ma è perfetto per il nostro.Vediamo come funziona.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator1.png} 
     \label{fig:Toscillator1}
 \end{figure}
 
- Supponiamo che la tensione all'ingresso non invertente dell'op-amp salti rapidamente da 0 a 1 volt. Per raggiungere uno stato di equilibrio, l'op-amp cercherà di aumentare la tensione all'ingresso invertente fino a 1 volt anch'esso ( ricorda v+ = v- in un opamp). Per farlo, aumenterà inizialmente la sua tensione di uscita a 1 volt. Questo funzionerà all'inizio, poiché tale tensione attraversa direttamente i due condensatori e raggiunge così l'ingresso invertente. Tuttavia, a causa della presenza di una resistenza verso terra tra i due condensatori, vedremo una corrente che defluisce dal primo condensatore, il che significa che la tensione applicata al secondo condensatore, e successivamente all'ingresso invertente, diminuirà.
+ Supponiamo che la tensione all'ingresso non invertente dell'op-amp salti rapidamente da 0 a 1 volt. Per raggiungere uno stato di equilibrio, l'op-amp cercherà di aumentare la tensione all'ingresso invertente fino a 1 volt anch'esso ( ricorda v+ = v- in un opamp).
+ Per farlo, aumenterà inizialmente la sua tensione di uscita a 1 volt. Questo funzionerà all'inizio, poiché tale tensione attraversa direttamente i due condensatori e raggiunge così l'ingresso invertente.
+ Tuttavia, a causa della presenza di una resistenza verso terra tra i due condensatori, vedremo una corrente che defluisce dal primo condensatore, il che significa che la tensione applicata al secondo condensatore, e successivamente all'ingresso invertente, diminuirà.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator2.png} 
     \label{fig:Toscillator2}
 \end{figure}
 
-Per compensare, l'op-amp aumenterà la sua tensione di uscita, ma facendo ciò, ancora più corrente verrà spremuta fuori dal primo condensatore, costringendo l'op-amp a spingere ancora di più. Questo continuerebbe fino a quando l'op-amp raggiunge la tensione di alimentazione superiore, se non fosse per la resistenza di collegamento in retroazione. Man mano che l'op-amp spinge sempre più forte, quella resistenza permette una piccola corrente di caricare il secondo condensatore dall'altro lato. A un certo punto, questo processo aggiungerà più tensione sulla sinistra di quanta ne perderemo a destra, facendo sì che l'intero meccanismo si inverta.
+Per compensare, l'op-amp aumenterà la sua tensione di uscita, ma facendo ciò, ancora più corrente verrà spremuta fuori dal primo condensatore, costringendo l'op-amp a spingere ancora di più.
+Questo continuerebbe fino a quando l'op-amp raggiunge la tensione di alimentazione superiore, se non fosse per la resistenza di collegamento in retroazione.
+Man mano che l'op-amp spinge sempre più forte, quella resistenza permette una piccola corrente di caricare il secondo condensatore dall'altro lato.
+A un certo punto, questo processo aggiungerà più tensione sulla sinistra di quanta ne perderemo a destra, facendo sì che l'intero meccanismo si inverta.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator3.png} 
     \label{fig:Toscillator3}
 \end{figure}
 
 
-L'op-amp inizierà a ridurre la sua tensione di uscita per cercare di correggere, ma il problema è che ciò sottrarrà corrente dal primo condensatore e successivamente dal lato terra, aumentando la tensione tra i due condensatori e quindi all'ingresso invertente, il che costringerà l'op-amp a ridurre ulteriormente la sua tensione di uscita. Alla fine raggiungeremo di nuovo un punto critico dove il meccanismo si invertirà, ma questa volta a una tensione di uscita leggermente inferiore. Questo accade perché ad ogni ciclo di carica e scarica perdiamo un po' del momento iniziale. 
+L'op-amp inizierà a ridurre la sua tensione di uscita per cercare di correggere, ma il problema è che ciò sottrarrà corrente dal primo condensatore e successivamente dal lato terra, aumentando la tensione tra i due condensatori e quindi all'ingresso invertente, il che costringerà l'op-amp a ridurre ulteriormente la sua tensione di uscita.
+Alla fine raggiungeremo di nuovo un punto critico dove il meccanismo si invertirà, ma questa volta a una tensione di uscita leggermente inferiore.
+Questo accade perché ad ogni ciclo di carica e scarica perdiamo un po' del momento iniziale. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{Toscillator4.png} 
     \label{fig:Toscillator4}
 \end{figure}
 
 Il circuito si comporta un po' come un pendolo, e quindi l'uscita prodotta è un'onda sinusoidale che oscilla attorno alla tensione dell'ingresso non invertente con un'ampiezza in continua diminuzione, che dovrebbe già suonare molto simile a un suono di grancassa se la frequenza è abbastanza bassa.
-Per assicurarsi che lo sia, dobbiamo scegliere la giusta combinazione di valori per i condensatori e le resistenze. Questo è un po' complicato, poiché tutti questi valori influenzano sia la frequenza che il decadimento contemporaneamente. Nel circuito originale della grancassa dell'808, Roland utilizzava una resistenza di collegamento da 1 Megaohm, una resistenza verso terra da 51k e due condensatori da 15 nanofarad, ottenendo una frequenza di oscillazione di 50 hertz con un decadimento molto rapido. Usiamo questi valori come punto di partenza. 
+Per assicurarsi che lo sia, dobbiamo scegliere la giusta combinazione di valori per i condensatori e le resistenze.
+Questo è un po' complicato, poiché tutti questi valori influenzano sia la frequenza che il decadimento contemporaneamente.
+Nel circuito originale della grancassa dell'808, Roland utilizzava una resistenza di collegamento da 1 Megaohm, una resistenza verso terra da 51k e due condensatori da 15 nanofarad, ottenendo una frequenza di oscillazione di 50 hertz con un decadimento molto rapido.
+Usiamo questi valori come punto di partenza. 
 
 \subsubsection{Dominio frequenza}
 
