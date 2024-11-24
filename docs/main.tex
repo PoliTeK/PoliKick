@@ -66,7 +66,9 @@ In questo documento si studia il comportamento dei diversi blocchi che compongon
 \subsection{Gate to Trigger}
 
 \subsubsection{Analisi}
-Per cominciare, studiamo il primo blocco del circuito. La tensione d'ingresso \(v_i\) è un segnale che proviene da un sequencer, pertanto sarà formato da una sequenza di porte rettangolari ("gate") (figura \ref{fig:sequencer-signal}).
+Per cominciare, studiamo il primo blocco del circuito.
+La tensione d'ingresso \(v_i\) è un segnale che proviene da un sequencer, pertanto sarà formato da una sequenza di porte rettangolari ("gate").
+L'obiettivo di questa sezione è condizionare il segnale in modo che sia utilizzabile dal circuito oscillatore.
 
 \begin{figure}[ht]
     \centering
@@ -75,20 +77,8 @@ Per cominciare, studiamo il primo blocco del circuito. La tensione d'ingresso \(
     \caption{Gate to Trigger}
 \end{figure}
 
-% TODO: inserire figura esempio del segnale sequencer
-\begin{figure}[ht]
-    \centering
-    \label{fig:sequencer-signal}
-\end{figure}
-
 Ignoriamo inizialmente il diodo. Il segnale \(v_i\) viene immediatamente filtrato da un filtro RC passa-alto, pertanto la tensione \(v_+\) assume la caratteristica forma esponenziale ad ogni transizione di \(v_i\).
-È utile introdurre il diodo \(D\) perché alcuni op-amp soffrono di un effetto chiamato "phase inversion" se la tensione ai terminali diventa eccessivamente negativa; il compito del diodo è di bloccare la tensione su \(v_+\) ad un valore fisso durante la fase di discesa del segnale \(v_i\) (figura \ref{fig:sequencer-signal-hpf}).
-
-% TODO: inserire figura
-\begin{figure}[ht]
-    \centering
-    \label{fig:sequencer-signal-hpf}
-\end{figure}
+È utile introdurre il diodo \(D\) perché alcuni op-amp soffrono di un effetto chiamato "phase inversion" se la tensione ai terminali diventa eccessivamente negativa; il compito del diodo è di bloccare la tensione su \(v_+\) ad un valore fisso durante la fase di discesa del segnale \(v_i\) (figura \ref{fig:gate-to-trigger-condizionamento}).
 
 L'op-amp è nella configurazione di comparatore non invertente senza isteresi:
 \begin{align*}
@@ -107,6 +97,13 @@ La frequenza di taglio del filtro passa-alto è \(f_0 = \frac{1}{2 \pi \tau}\), 
 Durante il transitorio in fase di salita del segnale \(v_i\), si ha \(v_A > \var{V}{REF}\) solo per un breve intervallo di tempo \(\Delta t\).
 In questo intervallo l'uscita del comparatore è \(\var{V}{AL}\).
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{gatebase.png} 
+    \caption{Condizionamento del segnale}
+    \label{fig:gate-to-trigger-condizionamento}
+\end{figure}
+
 Esaminiamo uno di questi transitori:
 \begin{align*}
     v_A(t) > \var{V}{REF} & \implies
@@ -123,7 +120,8 @@ Affinché il funzionamento del circuito sia corretto è necessario che l'op-amp 
 \end{equation*}
 
 \subsubsection{Dimensionamento}
-È necessario che la costante di tempo \(\tau\) sia sufficientemente piccola rispetto alla durata del gate \(T\). Scegliamo prima il valore di \(\Delta t\), da cui dipende il funzionamento del blocco oscillatore.
+È necessario che la costante di tempo \(\tau\) sia sufficientemente piccola rispetto alla durata \(T\) del gate.
+Scegliamo prima il valore di \(\Delta t\), da cui dipende il funzionamento del blocco oscillatore.
 Imponiamo quindi \(5 \tau \le T\)
 
 \begin{example}
@@ -221,18 +219,6 @@ Nel circuito del filtro a T di ponte, l'uscita dell'amplificatore operazionale h
     \caption{T-oscillator}
     \label{fig:Toscillator-plot}
 \end{figure}
-
-\subsection{Gate to Trigger}
-\subsubsection{Scopo}
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{gatebase.png} 
-    \caption{gate to trigger}
-    \label{fig:gate to trigger}
-\end{figure}
-L'obbiettivo di questa sezione di Circuito è Condizionare 
-
 
 \end{document}
 
