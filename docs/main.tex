@@ -40,7 +40,7 @@
 
 %
 
-\newcommand{\var}[2]{#1_\text{#2}}
+\newcommand{\var}[2]{#1_\mathrm{#2}}
 \DeclareMathOperator{\ustep}{u}
 
 \theoremstyle{definition}
@@ -105,12 +105,12 @@ In questo intervallo l'uscita del comparatore è \(\var{V}{AL}\).
 \end{figure}
 
 Esaminiamo uno di questi transitori:
-\begin{align*}
+\begin{align}
     v_A(t) > \var{V}{REF} & \implies
-    V_I e^{-t/\tau} \ustep(t) > \var{V}{REF} = k \var{V}{AL} \geq 0 \\
+    V_I e^{-t/\tau} \ustep(t) > \var{V}{REF} = k \var{V}{AL} \geq 0 \nonumber \\
     & \implies 0 < t < \tau \log\frac{V_I}{k \var{V}{AL}} \triangleq \Delta t
     \label{eq:trigger-dt}
-\end{align*}
+\end{align}
 
 La presenza dell'op-amp garantisce un'impedenza d'uscita \(\var{R}{out} \approx 0\).
 
@@ -134,6 +134,48 @@ Imponiamo quindi \(5 \tau \le T\)
     \end{align*}
 \end{example}
 
+
+\subsection{Accent Control Voltage}
+
+\subsubsection{Analisi}
+
+Il secondo blocco che esamineremo è l'\emph{Accent CV}, che permette di modificare l'entità dell'impulso in uscita dal blocco precedente attraverso una tensione di controllo \(v_A\)
+(figura \ref{fig:accent-cv}).
+La tensione \(v_A\) assume un valore compreso tra \qty{0}{\volt} e \qty{5}{\volt}. \\
+
+\begin{figure}[ht]
+    \centering
+    \input{circuits/accent_cv.tex}
+    \caption{Accent CV}
+    \label{fig:accent-cv}
+\end{figure}
+
+Innanzitutto osserviamo che \(T_1\) non può entrare in saturazione perché \(\var{V}{CB,1} = -v_A \le \qty{0}{\volt}\), pertanto la giunzione collettore-base non può essere in conduzione.
+Poiché la tensione in ingresso \(v_i\) è la tensione d'uscita del gate to trigger, per analizzare il funzionamento di questo circuito consideriamo due casi:
+
+\begin{enumerate}
+    \item Impulso, uscita del comparatore alta (\(v_i = +\var{V}{AL}\))
+    \item Uscita del comparatore bassa (\(v_i = -\var{V}{AL}\))
+\end{enumerate}
+
+Nel primo caso ipotizziamo \(T_1\) e \(T_2\) in linearità, e verifichiamo che quest'ipotesi sia compatibile con i risultati.
+Allora \(T_2\) è in configurazione di collettore comune e riporta, con un piccolo offset, la tensione che riceve sulla base (\(v_B\)).
+Invece \(T_1\), siccome la giunzione emettitore-base è in conduzione, riporta \(v_A\) sul suo emettitore;
+ai fini di questa analisi si comporta come un generatore di tensione di valore \(v_A + \var{V}{EB,1,on}\).
+Ipotizzando che la corrente di base di \(T_2\) sia trascurabile, otteniamo per \(v_B\) la seguente espressione:
+%
+\begin{equation}
+    v_B = \frac{R_I \parallel R_B}{R_E + R_I \parallel R_B} \left(v_A + \var{V}{EB,1,on} \right) +
+    \frac{R_E \parallel R_B}{R_I + R_E \parallel R_B} \var{V}{AL}
+\end{equation}
+%
+L'uscita del blocco è \(v_o = v_B - \var{V}{BE,2,on}\).
+\\
+
+Nel secondo caso \(v_i = -\var{V}{AL}\) e risulta \(v_B < 0 \); entrambi i transistor sono in interdizione e l'uscita del blocco vale \(v_o = \qty{0}{\volt}\).
+
+% TODO: inserire grafici dell'andamento di v_B
+
 \subsection{T-Oscillator}
 \subsubsection{Comportamento qualitativo nel dominio tempo}
 \begin{figure}[ht]
@@ -151,7 +193,7 @@ Tuttavia, anche quando avviato, non continuerà a oscillare come fanno gli altri
     \label{fig:Toscillator1}
 \end{figure}
 
- Supponiamo che la tensione all'ingresso non invertente dell'op-amp salti rapidamente da 0 a 1 volt. Per raggiungere uno stato di equilibrio, l'op-amp cercherà di aumentare la tensione all'ingresso invertente fino a 1 volt anch'esso ( ricorda v+ = v- in un opamp).
+ Supponiamo che la tensione all'ingresso non invertente dell'opamp salti rapidamente da 0 a 1 volt. Per raggiungere uno stato di equilibrio, l'opamp cercherà di aumentare la tensione all'ingresso invertente fino a 1 volt anch'esso ( ricorda v+ = v- in un opamp).
  Per farlo, aumenterà inizialmente la sua tensione di uscita a 1 volt. Questo funzionerà all'inizio, poiché tale tensione attraversa direttamente i due condensatori e raggiunge così l'ingresso invertente.
  Tuttavia, a causa della presenza di una resistenza verso terra tra i due condensatori, vedremo una corrente che defluisce dal primo condensatore, il che significa che la tensione applicata al secondo condensatore, e successivamente all'ingresso invertente, diminuirà.
 

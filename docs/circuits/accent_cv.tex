@@ -1,0 +1,22 @@
+\begin{tikzpicture}[scale=0.8]
+	% Paths, nodes and wires:
+	\draw (3, 5) to[american resistor, l={$R_I$}, label distance=0.02cm] (5, 5);
+	\draw node[npn] (N1) at (8, 5) {} node[anchor=west] at (N1.text){$T_2$};
+	\draw[draw] (7.16, 5) -- (5, 5);
+	\draw node[pnp] (N2) at (5, 2.27) {} node[anchor=west] at (N2.text){$T_1$};
+	\draw (5, 3.02) to[american resistor, l={$R_E$}, label distance=0.02cm] (5, 4.75);
+	\draw[draw] (4.16, 2.27) -- (3.75, 2.27);
+	\draw (6.5, 4.77) to[american resistor, l={$R_B$}, label distance=0.02cm] (6.5, 1.52);
+	\draw node[sground] at (5, 1.5) {};
+	\draw node[sground] at (6.5, 1.52) {};
+	\draw node[circ] (N3) at (3.75, 2.27) {} node[anchor=east] at (N3.west){$v_A$};
+	\draw node[circ] (Vi) at (3, 5) {} node[anchor=east] at (Vi.west){$v_i$};
+	\draw node[vcc] (N4) at (8, 5.77) {} node[anchor=south] at (N4.north){$V_\text{AL}$};
+	\draw[draw] (5, 5) -| (5, 4.75);
+	\draw[draw] (6.5, 4.75) -| (6.5, 5);
+	\draw[draw] (8, 4.23) -| (8, 4) -- (9, 4);
+	\draw node[ocirc] (Vo) at (9, 4) {} node[anchor=west] at (Vo.east){$v_o$};
+	\draw (8.5, 4) to[european resistor, l={$R_L$}, label distance=0.02cm] (8.5, 1.5);
+	\draw node[sground] at (8.5, 1.5) {};
+	\draw node[circ] (Vb) at (5, 5) {} node[anchor=south] at (Vb.text){$v_B$};
+\end{tikzpicture}
