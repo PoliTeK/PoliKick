@@ -1,0 +1,180 @@
+\documentclass{article}
+
+% Useful packages
+\usepackage{amsmath}  % improve math presentation
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[english]{babel}
+\usepackage{cancel}
+\usepackage{caption}
+\captionsetup{labelfont=bf, font=footnotesize}
+\usepackage{circuitikz}
+\usepackage{cite} % takes care of citations
+\usepackage{enumitem}
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=black,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage{placeins} % better float control
+\usepackage{siunitx}
+\sisetup{
+    sticky-per,
+    per-mode=power,
+    exponent-product=\cdot,
+    forbid-literal-units,
+    inline-per-mode=power,
+    display-per-mode=fraction,
+    uncertainty-mode=separate,
+    output-decimal-marker={,}
+}
+\usepackage{standalone}
+\usepackage{subcaption}
+\usepackage{tabularx} % extra features for tabular environment
+
+%
+
+\newcommand{\var}[2]{#1_\mathrm{#2}}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+%
+
+\title{Cookbook}
+\author{Politek}
+
+\begin{document}
+\maketitle
+
+\numberwithin{figure}{section}
+\numberwithin{equation}{section}
+
+\begin{abstract}
+    This document provides an analysis of the behavior of each of the subcircuits that can be found in the kick, along with a quick summary for future reference.
+\end{abstract}
+
+\tableofcontents
+
+\section{Gate to trigger}
+Let's start from the very first block of the circuit.
+The purpose of the \textit{gate to trigger} is to transform the signal from the sequencer into a sequence of short impulses.
+
+\subsection{Analysis}
+The input voltage \(v_i\) is the sequencer signal. It is a sequence of rectangular windows (gates).
+
+\begin{figure}[ht]
+    \centering
+    \input{../circuits/gate_to_trigger.tex}
+    \label{fig:gate-to-trigger}
+    \caption{Gate to Trigger}
+\end{figure}
+
+The signal \(v_i\) goes first of all through an RC high-pass fitler, hence \(v_+\) takes on the characteristic exponential shape upon every rising or falling edge of \(v_i\).
+The presence of \(D\) is needed because some op-amps undergo an effect called "phase inversion" if the voltage at either terminal becomes too negative; the diode blocks \(v_+\) at a fixed value during the falling edge of \(v_i\) (Figure \ref{fig:gate-to-trigger-conditioning}).
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/gatebase.png} 
+    \caption{Signal conditioning}
+    \label{fig:gate-to-trigger-conditioning}
+\end{figure}
+
+The op-amp is in a non inverting comparator configuration (without hysteresis):
+\begin{align*}
+    v_o &= \begin{cases}
+        +\var{V}{CC}, & v_A > \var{V}{REF} \\
+        -\var{V}{CC}, & v_A < \var{V}{REF} \\
+    \end{cases}
+    &
+    \var{V}{REF} &= k \var{V}{CC}
+    &
+    k \triangleq \frac{R_a}{R_a + R_b}
+\end{align*}
+
+The cut-off frequency of the high-pass filter is \(f_0 = \frac{1}{2 \pi \tau}\), where \(\tau = RC\).
+During the rising edge of \(v_i\), we get \(v_A > \var{V}{REF}\) for a small time \(\Delta t\).
+During this interval the output of the comparator is \(\var{V}{CC}\).
+%
+Let's examine what happens during this transient:
+\begin{align}
+    v_A(t) > \var{V}{REF} & \implies
+    V_I e^{-t/\tau} (t) > \var{V}{REF} = k \var{V}{CC} \geq 0,
+    \quad t \ge 0 \nonumber \\
+    & \implies 0 < t < \tau \log\frac{V_I}{k \var{V}{CC}} \triangleq \Delta t
+    \label{eq:trigger-dt}
+\end{align}
+
+In order to have a working circuit we need to ensure that the slew rate of the op-amp be sufficiently high:
+\[S_R \gg \frac{2 \var{V}{CC}}{\Delta t}\]
+
+Futhermore, the presence of the op-amp guarantees a small output impedance \(\var{R}{out} \approx 0\).
+
+\begin{example}
+    Let's choose \(\Delta t = \frac{T}{10}\) where \(T\) is the gate duration.
+    We need to make sure that \(\tau\) is sufficiently small compared to \(T\), e.g. \(\tau = \Delta t = \frac{T}{10}\):
+    \begin{align*}
+        &\cancel{\tau} \log\frac{V_I}{k \var{V}{CC}} = \cancel{\Delta t} \implies
+        V_I = e \cdot k \var{V}{CC} \implies
+        k = \frac{R_a}{R_a + R_b} = \frac{V_I}{e \var{V}{CC}} \\
+        &\tau = RC \implies C = \tau/R = \frac{T}{10R}
+    \end{align*}
+\end{example}
+
+\subsection{Summary}
+\begin{itemize}
+    \item \(v_i(t) = V_I, \quad 0 \le t \le T\)
+    \item \(\var{V}{REF} = \frac{R_a}{R_a + R_b} \var{V}{CC}\)
+    \item \(\Delta t = \tau \log\frac{V_I}{\var{V}{REF}}\)
+    \item \(S_R \gg \frac{2\var{V}{CC}}{\Delta t}\)
+\end{itemize}
+
+
+\section{Accent Control Voltage}
+The next block we are going to study is the \textit{ACV}, whose purpose is to control the amplitude of the impulse generated by the \textit{gate to trigger} using a control voltage.
+
+\subsection{Analysis}
+The control voltage \(v_A\) takes a value between \qty{0}{\volt} and \qty{5}{\volt}.
+
+\begin{figure}[ht]
+    \centering
+    \input{../circuits/accent_cv.tex}
+    \caption{Accent CV}
+    \label{fig:accent-cv}
+\end{figure}
+
+First of all, notice that \(T_1\) cannot operate in the saturation region because \(\var{V}{CB,1} = -v_A \le \qty{0}{\volt}\), thus its collector-base junction is off.
+Since the input voltage \(v_i\) is the output of the \textit{gate to trigger}, we consider two cases:
+
+\begin{enumerate}
+    \item Comparator output is high (impulse) (\(v_i = +\var{V}{CC}\))
+    \item Comparator output is low (\(v_i = -\var{V}{CC}\))
+\end{enumerate}
+
+In the first case, let's assume \(T_1\) and \(T_2\) are in the active linear region.
+Then \(T_2\) acts as a voltage buffer (with a small offset), which is needed to decouple the input and output impedances.
+Because the emitter-base junction of \(T_1\) is conducting, it follows that the voltage \(v_A\) is copied to the emitter of \(T_1\), again with a small offset, thus \(T_1\) behaves like a voltage generator \(v_A + \var{V}{EB,1,on}\).
+Supposing that the base current of \(T_2\) be negligible, we obtain the following expression for \(v_B\):
+\begin{align}
+    v_B &= \frac{R_I \parallel R_B}{R_E + R_I \parallel R_B} \left(v_A + \var{V}{EB,1,on} \right)
+    + \frac{R_E \parallel R_B}{R_I + R_E \parallel R_B} \var{V}{CC}
+    &
+    v_o &= v_B - \var{V}{BE,2,on}
+\end{align}
+
+In the second case \(v_i = -\var{V}{CC}\).
+Both transistors are off. Since the base current of \(T_2\) is zero, we get the following expression for \(v_B\):
+\begin{align*}
+    v_B &= -\frac{R_B}{R_I + R_B} \var{V}{CC}
+    &
+    v_o &= \qty{0}{\volt}
+\end{align*}
+which agrees with out hypothesis.
+
+\end{document}
