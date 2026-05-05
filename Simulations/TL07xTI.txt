@@ -1,0 +1,182 @@
+
+* * Source File: TL071xBlk_TI.asc
+* Developer: ETech (eetech00@yahoo.com)
+* Created: Mar 17 2019
+* Revision: Feb 15 2022
+*
+* This Texas Instruments TL07x spice model was tested
+* with LTSpice. Temperature is not modeled.
+*
+* If symbol does not have power pins, the symbol
+* must have VCC VEE specified in the "SpiceModel"
+* attribute of the symbol.
+*
+* TL07xx Low-Noise FET-Input Operational Amplifiers
+*
+.SUBCKT TL071 INP INN OUT N1 N2 VCC VEE
+XTL071x INP INN OUT N1 N2 VCC VEE TL071xTI
+.ENDS TL071
+*
+.SUBCKT TL072 INP INN OUT VCC VEE
+XTL071x INP INN OUT N1 N2 VCC VEE TL071xTI
+.ENDS TL072
+*
+.SUBCKT TL074 INP INN OUT VCC VEE
+XTL071x INP INN OUT N1 N2 VCC VEE TL071xTI
+.ENDS TL074
+*
+.subckt TL071xTI INP INN OUT N1 N2 VCC VEE
+Q1 15 14 N2 0 NP 0.5
+Q2 VEE 17 24 0 PN 0.5
+Q3 11 14 N1 0 NP 0.5
+Q4 VCC 11 14 0 NP 0.5
+R1 14 VEE 35k
+R2 N2 VEE 1080
+R3 N1 VEE 1080
+J1 11 vos 13 PJ 0.5
+J2 15 INP 13 PJ 0.5
+Q5 VCC 15 18 0 NP 0.5
+Q6 17 18 21 0 NP 0.5
+R4 18 VEE 35k
+R5 21 VEE 100
+C1 17 15 18p Rser=0.00001 Rpar=10G
+Q7 15 15 17 0 NP 0.5
+Q8 19 20 17 0 NP 0.5
+Q9 19 19 20 0 NP 0.5
+Q10 VCC 19 22 0 NP 0.5
+R6 20 17 30k
+R7 22 23 64
+R8 23 24 64
+Q11 13 16 12 VCC PN 0.5
+Q12 19 16 VCC VCC PN 0.5
+Q13 16 16 VCC VCC PN 0.5
+R9 OUT 23 128
+Q14 16 26 25 0 NP 0.5
+J3 26 VCC VCC PJ 0.5
+R10 25 VEE 8.2k
+Q15 VEE VEE 26 0 NPZ 0.5
+R11 VCC 12 500
+R12 vos INN 100e6
+.MODEL PJ PJF(IS=15.00E-14 BETA=270.1E-6 VTO=-1)
+.Model NP NPN (
++ is=3.885e-17
++ bf=128
++ nf=1
++ vaf=33.727
++ ikf=0.015571
++ ise=0
++ ne=1.5
++ br=2.366
++ nr=1
++ var=3.813
++ ikr=0.0002398
++ isc=0
++ nc=1.5
++ rb=447.48
++ irb=0
++ rbm=118.79
++ re=3.6743
++ rc=69.593
++ xtb=1.395
++ eg=1.115
++ xti=4.004
++ cje=5.565e-14
++ vje=0.91
++ mje=0.419
++ tf=2.0e-11
++ xtf=9.17
++ vtf=2.24
++ itf=0.17493
++ ptf=0
++ cjc=6.8565e-14
++ vjc=0.715
++ mjc=0.38
++ xcjc=0.18423
++ tr=4.0e-10
++ cjs=2.1623e-13
++ vjs=0.567
++ mjs=0.402
++ fc=0.5
++)
+.Model PN PNP (
++ is=5.2163e-16
++ bf=100.2
++ nf=1
++ vaf=11.015
++ ikf=0.001324
++ ise=0
++ ne=1.5
++ br=9.8
++ nr=1
++ var=6.631
++ ikr=0.00040489
++ isc=0
++ nc=1.5
++ rb=563
++ irb=0
++ rbm=0
++ re=4.21
++ rc=146
++ xtb=2.806
++ eg=1.185
++ xti=0.1418
++ cje=5.5136e-14
++ vje=0.715
++ mje=0.38
++ tf=1.515e-11
++ xtf=13
++ vtf=2.56
++ itf=0
++ ptf=0
++ cjc=1.6889e-13
++ vjc=0.76
++ mjc=0.40191
++ xcjc=0
++ tr=6.0e-9
++ cjs=5.1968e-13
++ vjs=0.76
++ mjs=0.3738
++ fc=0.5
++)
+.Model NPZ NPN (
++ is=3.885e-17
++ bf=128
++ nf=1
++ vaf=33.727
++ ikf=0.015571
++ ise=0
++ ne=1.5
++ br=2.366
++ nr=1
++ var=3.813
++ ikr=0.0002398
++ isc=0
++ nc=1.5
++ rb=447.48
++ irb=0
++ rbm=118.79
++ re=3.6743
++ rc=69.593
++ xtb=1.395
++ eg=1.115
++ xti=4.004
++ cje=5.565e-14
++ vje=0.91
++ mje=0.419
++ tf=2.0e-11
++ xtf=9.17
++ vtf=2.24
++ itf=0.17493
++ ptf=0
++ cjc=6.8565e-14
++ vjc=0.715
++ mjc=0.38
++ xcjc=0.18423
++ tr=4.0e-10
++ cjs=2.1623e-13
++ vjs=0.567
++ mjs=0.402
++ fc=0.5
++ BVbe=4.9
++)
+.ends TL071xTI
