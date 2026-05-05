@@ -2,7 +2,7 @@
 	<br>
 		<img src="images/" width="200">
 	<br>
-		808 Eurorack Module
+		PoliKicK
 	<br>
 </h1>
 
@@ -129,8 +129,8 @@ To install the module in your Eurorack system:
 
 To simulate the analog behavior of the  circuitry, we used LTspice.
 
-- Inside the `Simulation` folder, you will find the `.asc` files containing the core voice circuits.
-- The trigger inputs in the simulation are modeled using a `PULSE` voltage source configured to deliver a 1ms, 5V square wave, mimicking a standard sequencer trigger.
+- Inside the `Simulation` folder, you will find the `PoliKick.asc` files containing the core voice circuits.
+- The trigger inputs in the simulation are modeled using a `PULSE` voltage source configured to  mimick a standard sequencer trigger.
 - Run the `.tran` command to observe the envelope generation and the audio output transient response. 
 - You can adjust the `.step param` commands on the simulated potentiometers to test the range of the front panel controls.
 
