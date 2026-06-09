@@ -1,6 +1,6 @@
 <h1 align="center">
 	<br>
-		<img src="images/PoliKick_MezzoPRofilo_Nero.png" width="200">
+		<img src="images/PoliKick_Sfondo.png" width="200">
 	<br>
 		PoliKicK
 	<br>
