@@ -26,11 +26,11 @@
 - **Expanded Sound Design:** Additional parameters exposed on the front panel compared to the original desktop unit.
 - **High Headroom:** Output stages properly amplified to reach modular audio levels (up to 10Vpp).
 
-## List of Components
+# Project Component List
 
-*Note: All the components listed below can be easily found and purchased on major electronic component distributors such as Mouser and DigiKey.*
+All the components listed below can be easily found and purchased on major electronic component distributors such as Mouser and DigiKey.
 
-### Resistors
+## Resistors
 
 *All resistors are through-hole Metal Film (Part Number: `MFR-25FTF52`)*
 
@@ -61,7 +61,7 @@
 | R23      | 10    |
 | R24      | 10    |
 
-### Capacitors
+## Capacitors
 
 | Capacitor | Value   | Part Number |
 | --------- | ------- | ----------- |
@@ -76,44 +76,51 @@
 | C9        | 47 µF   | `ESH476M050A` |
 | C10       | 100 nF  | `K104K15X7RF` |
 
-### Diodes
+## Diodes
 
-| Diode | Characteristics | Part Number |
-| ----- | --------------- | ----------- |
-| D1 - D7 | Small Signal | `1N4148` |
-| D8 - D9 | Schottky Barrier | `1N5819` |
-| DS1     | Through Hole LED | `LTL-1CHYE` |
+| Diode   | Characteristics  | Part Number |
+| ------- | ---------------- | ----------- |
+| D1 - D7 | Small Signal     | `1N4148`      |
+| D8 - D9 | Schottky Barrier | `1N5819`      |
+| DS1     | Through Hole LED | `LTL-1CHYE`   |
 
-### ICs and Transistors
+## ICs and Transistors
 
-| Component | Characteristics | Part Number |
-| --------- | --------------- | ----------- |
-| U1        | Quad Low-Noise OP Amp | `TL074IN` |
-| Q1, Q3, Q4 | NPN Transistor | `BC548B` |
-| Q2, Q5    | PNP Transistor | `BC558BTA` |
+| Component  | Characteristics       | Part Number |
+| ---------- | --------------------- | ----------- |
+| U1         | Quad Low-Noise OP Amp | `TL074IN`     |
+| Q1, Q3, Q4 | NPN Transistor        | `BC548B`      |
+| Q2, Q5     | PNP Transistor        | `BC558BTA`    |
 
-### Potentiometers
+## Potentiometers
 
-| Designator | Name | Value | Part Number |
-| ---------- | ---- | ----- | ----------- |
-| A1 | AmpDeca   | 50k, log  | `PTV09A-4025` |
-| A2 | Distortior| 100k, log | `PTV09A-4025` |
-| B1 | Pitch     | 100k      | `PTV09A-4025` |
-| B2 | Tone      | 50k       | `PTV09A-4025` |
-| B3 | TuneDeca  | 100k      | `PTV09A-4025` |
-| B4 | TuneDept  | 10k       | `PTV09A-4025` |
-| B5 | PitchAmo  | 100k      | `PTV09A-4025` |
+| Designator | Name      | Value     | Part Number   |
+| ---------- | --------- | --------- | ------------- |
+| A1         | AmpDeca   | 50k, log  | `PTV09A-4025` |
+| A2         | Distortior| 100k, log | `PTV09A-4025` |
+| B1         | Pitch     | 100k      | `PTV09A-4025` |
+| B2         | Tone      | 50k       | `PTV09A-4025` |
+| B3         | TuneDeca  | 100k      | `PTV09A-4025` |
+| B4         | TuneDept  | 10k       | `PTV09A-4025` |
+| B5         | PitchAmo  | 100k      | `PTV09A-4025` |
 
-### Connectors and Switches
+## Connectors and Switches
 
-| Component | Description | Part Number |
-| --------- | ----------- | ----------- |
-| Connector | Power Header | `TSW-105-07-T` |
-| IN1-Gate  | 3.5 mm Stereo Jack | `SJ3-35052B` |
-| IN2-AccentCV | 3.5 mm Stereo Jack | `SJ3-35052B` |
-| IN3-PitchCV | 3.5 mm Stereo Jack | `SJ3-35052B` |
-| OUT1      | 3.5 mm Stereo Jack | `SJ3-35052B` |
-| SW1       | Toggle Switch | `BI_INT` |
+| Component    | Description        | Part Number  |
+| ------------ | ------------------ | ------------ |
+| Connector    | Power Header       | `TSW-105-07-T` |
+| IN1-Gate     | 3.5 mm Stereo Jack | `SJ3-35052B`   |
+| IN2-AccentCV | 3.5 mm Stereo Jack | `SJ3-35052B`   |
+| IN3-PitchCV  | 3.5 mm Stereo Jack | `SJ3-35052B`   |
+| OUT1         | 3.5 mm Stereo Jack | `SJ3-35052B`   |
+| SW1          | Toggle Switch      | `BI_INT`       |
+
+## Mechanical Hardware
+
+| Component | Description | Size / Value |
+| --------- | ----------- | ------------ |
+| Screws    | Machine Screws | M3 |
+| Standoffs | Hex Standoffs / Spacers | M3 |
 
 ## How To Use
 
