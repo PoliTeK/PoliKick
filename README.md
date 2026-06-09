@@ -6,7 +6,7 @@
 	<br>
 </h1>
 
-<h4 align="center">Circuit-level study of the <a href="https://www.ericasynths.lv/shop/diy-kits-1/edu-diy-kick-drum/">EDU DIY Kick Drum</a> by <a href="https://www.ericasynths.lv">Erica Synths</a>, based off of the legendary <a href="https://en.wikipedia.org/wiki/Roland_TR-808">TR-808</a>.</h4>
+<h4 align="center"> PoliKick is an analog Eurorack kick drum inspired by the legendary [TR-808](https://en.wikipedia.org/wiki/Roland_TR-808). Based on the [EDU DIY Kick Drum](https://www.ericasynths.lv/shop/diy-kits-1/edu-diy-kick-drum/) by [Erica Synths](https://www.ericasynths.lv), it adds a selectable distortion stage and an extended note range.
 
 ---
 
@@ -24,7 +24,7 @@
 - **Trigger and CV Control:** Accepts standard modular trigger pulses (5V-10V) and Control Voltage inputs for dynamic parameter modulation.
 - **Authentic Circuitry:** Faithful reproduction of the original analog synthesis paths using modern, easily sourced equivalent components.
 - **Expanded Sound Design:** Additional parameters exposed on the front panel compared to the original desktop unit.
-- **High Headroom:** Output stages properly amplified to reach modular audio levels (up to 10Vpp).
+
 
 # Project Component List
 
