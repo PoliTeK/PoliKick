@@ -121,7 +121,7 @@ All the components listed below can be easily found and purchased on major elect
 | Component | Description | Size / Value |
 | --------- | ----------- | ------------ |
 | Screws    | Machine Screws | M3 |
-| Standoffs | Hex Standoffs / Spacers | M3 |
+| Standoffs | Hex Standoffs / Spacers | M3, 1.5cm |
 
 ## How To Use
 
