@@ -19,6 +19,10 @@
 	<a href="#license">License</a>
 </p>
 
+
+
+
+
 ## Key Features
 
 - **Eurorack Standard:** Designed for standard +12V/-12V Eurorack power rails with a 10-pin power header.
@@ -26,7 +30,8 @@
 - **Authentic Circuitry:** Faithful reproduction of the original analog synthesis paths using modern, easily sourced equivalent components.
 - **Expanded Sound Design:** Additional parameters exposed on the front panel compared to the original desktop unit.
 
-
+## Technical Documentation 
+!!!!!! Work In Progress
 # Project Component List
 
 All the components listed below can be easily found and purchased on major electronic component distributors such as Mouser and DigiKey.
