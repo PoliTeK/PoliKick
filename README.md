@@ -20,7 +20,7 @@
 </p>
 
 
-## Technical Documentation Work in Progress
+
 
 
 ## Key Features
@@ -146,7 +146,7 @@ To simulate the analog behavior of the  circuitry, we used LTspice.
 - The trigger inputs in the simulation are modeled using a `PULSE` voltage source configured to  mimick a standard sequencer trigger.
 - Run the `.tran` command to observe the envelope generation and the audio output transient response. 
 - You can adjust the `.step param` commands on the simulated potentiometers to test the range of the front panel controls.
-
+## Technical Documentation Work in Progress
 ## Credits
 
 Circuit analysis and schematic references based on the [EDU DIY Kick Drum](https://www.ericasynths.lv/shop/diy-kits-1/edu-diy-kick-drum/) by Erica Synths, which originates from the classic Roland TR-808 service manual. 
