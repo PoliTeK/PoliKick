@@ -110,6 +110,7 @@ All the components listed below can be easily found and purchased on major elect
 | Component    | Description        | Part Number  |
 | ------------ | ------------------ | ------------ |
 | Connector    | Power Header       | `TSW-105-07-T` |
+| Connector    | IC soket           | `1-2199298-3`  |
 | IN1-Gate     | 3.5 mm Stereo Jack | `SJ3-35052B`   |
 | IN2-AccentCV | 3.5 mm Stereo Jack | `SJ3-35052B`   |
 | IN3-PitchCV  | 3.5 mm Stereo Jack | `SJ3-35052B`   |
