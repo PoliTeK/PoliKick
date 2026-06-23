@@ -33,7 +33,7 @@ All the components listed below can be easily found and purchased on major elect
 
 ## Resistors
 
-*All resistors are through-hole Metal Film (Part Number: `MFR-25FTF52`)*
+*All resistors are through-hole Metal Film (Part Number: `MFR-25FRF52`)*
 
 | Resistor | Value |
 | -------- | ----- |
