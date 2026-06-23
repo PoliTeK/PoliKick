@@ -72,10 +72,10 @@ All the components listed below can be easily found and purchased on major elect
 | C4        | 68 nF   | `C320C683J5R` |
 | C5        | 5.6 nF  | `MMK5332K50`  |
 | C6        | 220 nF  | `MMK5224J50`  |
-| C7        | 47 µF   | `ESH476M050A` |
-| C8        | 100 nF  | `K104K15X7RF` |
-| C9        | 47 µF   | `ESH476M050A` |
-| C10       | 100 nF  | `K104K15X7RF` |
+| C7        | 47 µF   | `ESH476M050AG3KA` |
+| C8        | 100 nF  | `K104K15X7RF53L2` |
+| C9        | 47 µF   | `ESH476M050AG3KA` |
+| C10       | 100 nF  | `K104K15X7RF53L2` |
 
 ## Diodes
 
@@ -89,21 +89,21 @@ All the components listed below can be easily found and purchased on major elect
 
 | Component  | Characteristics       | Part Number |
 | ---------- | --------------------- | ----------- |
-| U1         | Quad Low-Noise OP Amp | `TL074IN`     |
+| U1         | Quad Low-Noise OP Amp | `TL074CN`     |
 | Q1, Q3, Q4 | NPN Transistor        | `BC548B`      |
-| Q2, Q5     | PNP Transistor        | `BC558BTA`    |
+| Q2, Q5     | PNP Transistor        | `BC558B`    |
 
 ## Potentiometers
 
 | Designator | Name      | Value     | Part Number   |
 | ---------- | --------- | --------- | ------------- |
-| A1         | AmpDeca   | 50k, log  | `PTV09A-4025` |
-| A2         | Distortior| 100k, log | `PTV09A-4025` |
-| B1         | Pitch     | 100k      | `PTV09A-4025` |
-| B2         | Tone      | 50k       | `PTV09A-4025` |
-| B3         | TuneDeca  | 100k      | `PTV09A-4025` |
-| B4         | TuneDept  | 10k       | `PTV09A-4025` |
-| B5         | PitchAmo  | 100k      | `PTV09A-4025` |
+| A1         | AmpDeca   | 50k, log  | `PTV09A-5025F-A503` |
+| A2         | Distortior| 100k, log | `PTV09A-4030F-A104` |
+| B1         | Pitch     | 100k      | `PTV09A-4025F-B104` |
+| B2         | Tone      | 50k       | `PTV09A-4025F-B503` |
+| B3         | TuneDeca  | 100k      | `PTV09A-4025F-B104` |
+| B4         | TuneDept  | 10k       | `PTV09A-4025F-B103` |
+| B5         | PitchAmo  | 100k      | `PTV09A-4025F-B104` |
 
 ## Connectors and Switches
 
@@ -114,7 +114,7 @@ All the components listed below can be easily found and purchased on major elect
 | IN2-AccentCV | 3.5 mm Stereo Jack | `SJ3-35052B`   |
 | IN3-PitchCV  | 3.5 mm Stereo Jack | `SJ3-35052B`   |
 | OUT1         | 3.5 mm Stereo Jack | `SJ3-35052B`   |
-| SW1          | Toggle Switch      | `BI_INT`       |
+| SW1          | Toggle Switch      | `MN12SS4G03`       |
 
 ## Mechanical Hardware
 
