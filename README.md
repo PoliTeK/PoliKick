@@ -6,7 +6,7 @@
 	<br>
 </h1>
 
-
+## Technical Documentation Work in Progress
 <h4 align="center"> PoliKick is an analog Eurorack kick drum inspired by the legendary <a href="https://en.wikipedia.org/wiki/Roland_TR-808">TR-808</a>. Based on the <a href="https://www.ericasynths.lv/shop/diy-kits-1/edu-diy-kick-drum/">EDU DIY Kick Drum</a> by  <a href="https://www.ericasynths.lv">Erica Synths</a>, it adds a selectable distortion stage and an extended note range.
 
 ---
